@@ -1,6 +1,6 @@
 using Gee;
 
-namespace Helpers {
+namespace Services {
 
 public class RedditJsonService : Object {
 

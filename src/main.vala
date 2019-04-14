@@ -29,68 +29,27 @@
 using Gtk;
 
 public class Application : Window {
-	private int click_counter = 0;
 
 	public Application () {
 		// Prepare Gtk.Window:
-		this.title = "Download Japan Names";
+		this.title = "Download Reddit Titles";
 		this.window_position = Gtk.WindowPosition.CENTER;
 		this.destroy.connect (Gtk.main_quit);
-		this.set_default_size (350, 400);
+		this.set_default_size (800, 600);
 
 
-		// The button:
-		Gtk.Label top_label = new Gtk.Label("Top Label");
-		Gtk.Button button = new Gtk.Button.with_label ("Get GIS data");
-		Gtk.Button button2 = new Gtk.Button.with_label ("dont click me! [0]");
+        var scroll_view = new ScrollWindow();
+        var main_toolbar = new MainToolbar();
 
-		Gtk.Box top_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-		Gtk.Box bottom_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-
-		bottom_box.spacing = 10;
-
-
-		top_box.pack_start(top_label);
-		bottom_box.pack_start (button, false, false, 2);
-		bottom_box.pack_start (button2, false, true, 2);
-        //this.add(top_box);
-        //this.add(bottom_box);
-		button.clicked.connect (() => {
-			// Emitted when the button has been activated:
-			//button.label = "Click This! [%d]".printf (++this.click_counter);
-			stdout.printf("getting data!");
-            new Helpers.RedditJsonService().get_response();
-
-		});
-
-		button2.clicked.connect(() => {
-		    button2.label = "Click This! [%d]".printf (++this.click_counter);
-		});
-
-		var toolbar = new Toolbar ();
-        toolbar.get_style_context ().add_class (STYLE_CLASS_PRIMARY_TOOLBAR);
-
-        var open_icon = new Gtk.Image.from_icon_name ("document-open",
-            IconSize.SMALL_TOOLBAR);
-        var find_icon = new Gtk.Image.from_icon_name ("gtk-find", IconSize.SMALL_TOOLBAR);
-
-        var open_button = new Gtk.ToolButton (open_icon, "Download");
-        var find_button = new Gtk.ToolButton (find_icon, "Find");
-
-
-
-        open_button.is_important = true;
-        toolbar.add (open_button);
-        toolbar.add (find_button);
-        var scroll_view = new MyScrollWindow();
-        open_button.clicked.connect(() => {
-           var name_list = new Helpers.RedditJsonService().get_response();
+        main_toolbar.open_button.clicked.connect(() => {
+           var name_list = new Services.RedditJsonService().get_response();
            foreach(var name in name_list) {
                scroll_view.text_view.buffer.text += name + "\n";
            }
         });
+
         var vbox = new Box (Orientation.VERTICAL, 0);
-        vbox.pack_start (toolbar, false, true, 2);
+        vbox.pack_start (main_toolbar, false, true, 2);
         vbox.pack_start (scroll_view , true, true, 0);
         this.add(vbox);
 

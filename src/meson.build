@@ -1,7 +1,8 @@
 yaffa_sources = [
   'main.vala',
-  'JsonServiceGIS.vala',
-  'ScrollWindow.vala'
+  'Services/RedditJsonService.vala',
+  'Widgets/ScrollWindow.vala',
+  'Widgets/MainToolbar.vala'
 ]
 
 yaffa_deps = [

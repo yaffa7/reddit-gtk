@@ -1,6 +1,6 @@
 using Gtk;
 
-public class MyScrollWindow : ScrolledWindow {
+public class ScrollWindow : ScrolledWindow {
 
     public TextView text_view {get;set;}
 
