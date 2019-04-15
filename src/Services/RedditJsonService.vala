@@ -49,7 +49,9 @@ public class RedditJsonService : Object {
                 var thumbnail = child_data.get_string_member("thumbnail");
                 var name = child_data.get_string_member("name");
 
-                download_file(thumbnail, name );
+                if (FileUtils.test("/home/bren/Downloads/" + name + ".jpg", FileTest.EXISTS) == false) {
+                    download_file(thumbnail, name );
+                }
                 post_list.add(new Models.Post(title, author, link, name));
             }
 

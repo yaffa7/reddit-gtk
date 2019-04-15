@@ -35,7 +35,7 @@ public class Application : Window {
 		this.title = "Vala Reddit";
 		this.window_position = Gtk.WindowPosition.CENTER;
 		this.destroy.connect (Gtk.main_quit);
-		this.set_default_size (800, 600);
+		this.set_default_size (600, 900);
 
 
         var scroll_view = new ScrollWindow();
