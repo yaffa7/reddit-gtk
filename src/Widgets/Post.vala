@@ -6,12 +6,17 @@ public class Post : Box {
     Label post_author {get;set;}
     Label post_link {get;set;}
     Image post_image {get;set;}
+    Box post_details {get;set;}
+    Box image_container {get;set;}
 
     public Post(string title, string author, string link, string name) {
-        orientation = Orientation.VERTICAL;
+        orientation = Orientation.HORIZONTAL;
         post_title = new Label(title);
         post_author = new Label(author);
         post_link = new Label(link);
+        post_details = new Box(Orientation.VERTICAL, 0);
+        image_container = new Box(Orientation.VERTICAL, 0);
+
         post_image = new Image.from_file("/home/bren/Downloads/" + name + ".jpg");
 
         post_title.xalign = 0;
@@ -21,12 +26,14 @@ public class Post : Box {
         post_link.xalign = 0;
         post_link.margin_start = 10;
         post_image.xalign = 0;
-        post_image.opacity = 0.5;
 
+        post_details.pack_start(post_title, false, false ,5);
+        post_details.pack_start(post_author, false, false, 5);
+        post_details.pack_start(post_link, false, false, 5);
 
-        pack_start(post_image, false, false, 0);
-        pack_start(post_title, false, false ,5);
-        pack_start(post_author, false, false, 5);
-        pack_start(post_link, false, false, 5);
+        image_container.pack_start(post_image, false, false, 0);
+
+        pack_start(image_container, false, false ,0);
+        pack_start(post_details, false , false, 0);
     }
 }

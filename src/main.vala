@@ -32,7 +32,7 @@ public class Application : Window {
 
 	public Application () {
 		// Prepare Gtk.Window:
-		this.title = "Download Reddit Titles";
+		this.title = "Vala Reddit";
 		this.window_position = Gtk.WindowPosition.CENTER;
 		this.destroy.connect (Gtk.main_quit);
 		this.set_default_size (800, 600);
