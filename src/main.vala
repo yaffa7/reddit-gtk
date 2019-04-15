@@ -42,7 +42,7 @@ public class Application : Window {
         var main_toolbar = new MainToolbar();
 
         main_toolbar.clear_button.clicked.connect(() => {
-
+            scroll_view.clear_content();
         });
 
         var search_field = new Gtk.SearchEntry();
