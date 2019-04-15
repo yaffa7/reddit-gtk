@@ -42,14 +42,16 @@ public class Application : Window {
         var main_toolbar = new MainToolbar();
 
         main_toolbar.open_button.clicked.connect(() => {
-           var name_list = new Services.RedditJsonService().get_response();
-           foreach(var name in name_list) {
-               scroll_view.text_view.buffer.text += name + "\n";
-           }
+
         });
 
+        var search_field = new Gtk.SearchEntry();
+        search_field.activate.connect(() => {
+            scroll_view.load_content(search_field.get_text());
+        });
         var vbox = new Box (Orientation.VERTICAL, 0);
         vbox.pack_start (main_toolbar, false, true, 2);
+        vbox.pack_start(search_field, false, true, 5);
         vbox.pack_start (scroll_view , true, true, 0);
         this.add(vbox);
 

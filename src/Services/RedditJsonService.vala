@@ -5,9 +5,9 @@ namespace Services {
 public class RedditJsonService : Object {
 
 
-    public static ArrayList<string> get_response() {
-        var uri = "https://www.reddit.com/r/linux_gaming.json";
-        var name_list = new ArrayList<string>();
+    public static ArrayList<Models.Post> get_response(string subreddit) {
+        var uri = "https://www.reddit.com/r/" + subreddit + ".json";
+        var post_list = new ArrayList<Models.Post>();
         var session = new Soup.Session ();
         var message = new Soup.Message ("GET", uri);
         session.send_message (message);
@@ -27,14 +27,18 @@ public class RedditJsonService : Object {
             foreach(var child in children.get_elements()) {
                 var child_object = child.get_object();
                 var child_data = child_object.get_object_member("data");
-                var post_title = child_data.get_string_member("title");
-                name_list.add(post_title);
+
+                var title = child_data.get_string_member("title");
+                var author = child_data.get_string_member("author");
+                var link = child_data.get_string_member("url");
+
+                post_list.add(new Models.Post(title, author, link));
             }
 
             } catch (Error e) {
                 stderr.printf ("I guess something is not working...\n");
         }
-        return name_list;
+        return post_list;
     }
 }
 }

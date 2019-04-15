@@ -2,15 +2,22 @@ using Gtk;
 
 public class ScrollWindow : ScrolledWindow {
 
-    public TextView text_view {get;set;}
+    private Box _content_area {get;set;}
+    private Services.RedditJsonService _service = new  Services.RedditJsonService();
 
-    construct {
-        text_view = new TextView();
-        text_view.editable = true;
-        text_view.cursor_visible = false;
+    public ScrollWindow() {
+        _content_area = new Box (Orientation.VERTICAL, 0);
+        add(_content_area);
+    }
 
-        set_policy(PolicyType.AUTOMATIC, PolicyType.AUTOMATIC);
-        add(text_view);
+    public void load_content(string subreddit) {
+         var post_list = _service.get_response(subreddit);
+           foreach(Models.Post post in post_list) {
+               _content_area.pack_start(
+               new Post(post.post_title,post.post_author,post.post_link)
+               , false, false, 10);
+           }
+           _content_area.show_all();
     }
 
 }
