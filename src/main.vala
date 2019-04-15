@@ -46,6 +46,8 @@ public class Application : Window {
         });
 
         var search_field = new Gtk.SearchEntry();
+        search_field.placeholder_text = "Search Subreddit";
+
         search_field.activate.connect(() => {
             scroll_view.load_content(search_field.get_text());
         });
