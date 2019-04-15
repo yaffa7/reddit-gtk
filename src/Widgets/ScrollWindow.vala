@@ -14,10 +14,17 @@ public class ScrollWindow : ScrolledWindow {
          var post_list = _service.get_response(subreddit);
            foreach(Models.Post post in post_list) {
                _content_area.pack_start(
-               new Post(post.post_title,post.post_author,post.post_link)
+               new Post(post.post_title,post.post_author,post.post_link, post.post_name)
                , false, false, 10);
            }
            _content_area.show_all();
+    }
+
+    public void clear_content() {
+        var children = _content_area.get_children();
+        foreach(var child in children) {
+            _content_area.remove(child);
+        }
     }
 
 }

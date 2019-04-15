@@ -4,6 +4,21 @@ namespace Services {
 
 public class RedditJsonService : Object {
 
+    private static int count = 0;
+
+    public static void download_file(string url, string filename) {
+        if (".jpg" in url) {
+            stdout.printf("Downloading file: " + url + "\n");
+            var uri = url;
+            var session = new Soup.Session ();
+            var message = new Soup.Message ("GET", uri);
+            try {
+                count++;
+                session.send_message (message);
+                FileUtils.set_data("/home/bren/Downloads/" + filename + ".jpg" , message.response_body.data);
+            } catch (Error e) { stderr.printf("error happend downloading resource: " + url + "\n");}
+        }
+    }
 
     public static ArrayList<Models.Post> get_response(string subreddit) {
         var uri = "https://www.reddit.com/r/" + subreddit + ".json";
@@ -31,8 +46,11 @@ public class RedditJsonService : Object {
                 var title = child_data.get_string_member("title");
                 var author = child_data.get_string_member("author");
                 var link = child_data.get_string_member("url");
+                var thumbnail = child_data.get_string_member("thumbnail");
+                var name = child_data.get_string_member("name");
 
-                post_list.add(new Models.Post(title, author, link));
+                download_file(thumbnail, name );
+                post_list.add(new Models.Post(title, author, link, name));
             }
 
             } catch (Error e) {

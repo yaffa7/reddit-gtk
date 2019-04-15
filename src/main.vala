@@ -41,7 +41,7 @@ public class Application : Window {
         var scroll_view = new ScrollWindow();
         var main_toolbar = new MainToolbar();
 
-        main_toolbar.open_button.clicked.connect(() => {
+        main_toolbar.clear_button.clicked.connect(() => {
 
         });
 

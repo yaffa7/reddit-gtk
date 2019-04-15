@@ -12,7 +12,7 @@ yaffa_deps = [
   dependency('gtk+-3.0', version: '>= 3.22'),
   dependency('libsoup-2.4', version: '>=2.4'),
   dependency('json-glib-1.0', version: '>=1.0'),
-  dependency('gee-0.8',version: '>0.8')
+  dependency('gee-0.8',version: '>0.8'),
 ]
 
 gnome = import('gnome')
