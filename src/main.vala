@@ -46,6 +46,7 @@ public class Application : Window {
         });
 
         var search_field = new Gtk.SearchEntry();
+        search_field.get_style_context().add_class("scroll");
         search_field.placeholder_text = "Search Subreddit";
 
         search_field.activate.connect(() => {
@@ -57,6 +58,16 @@ public class Application : Window {
         vbox.pack_start (scroll_view , true, true, 0);
         this.add(vbox);
 
+        var css_provider = new CssProvider();
+        try {
+            css_provider.load_from_path("/home/bren/Documents/projects/reddit-gtk/src/Styles/style.css");
+        } catch (Error e) {
+            warning("nope");
+        }
+        StyleContext.add_provider_for_screen(
+            Gdk.Screen.get_default(),
+            css_provider,
+            STYLE_PROVIDER_PRIORITY_APPLICATION);
 
 	}
 
