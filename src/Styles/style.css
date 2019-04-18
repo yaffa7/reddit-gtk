@@ -5,13 +5,15 @@
 
 
 .post-title {
-	font-size: 20px;
-	font-weight: 500;
-	font-family: Helvetica;
+	font-family: cantarell, Arial;
+	font-weight: 600;
+	font-size: 22px;
 }
 
 .post {
 	padding: 10px;
+	background: rgba(.5,.5,.5,.13);
+	border-bottom: 1px solid rgba(129,131,132,.2);
 }
 
 .post-author {

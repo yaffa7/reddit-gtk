@@ -12,7 +12,7 @@ public class Post : Box {
     public Post(string title, string author, string link, string name) {
         orientation = Orientation.HORIZONTAL;
         post_title = new Label(title);
-        post_author = new Label(author);
+        post_author = new Label("Posted by u/" + author);
         post_link = new Label(link);
         post_details = new Box(Orientation.VERTICAL, 0);
         image_container = new Box(Orientation.VERTICAL, 0);

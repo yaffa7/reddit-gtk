@@ -48,6 +48,7 @@ public class RedditJsonService : Object {
                 var link = child_data.get_string_member("url");
                 var thumbnail = child_data.get_string_member("thumbnail");
                 var name = child_data.get_string_member("name");
+                var flair = child_data.get_string_member("link_flair_css_class");
 
                 if (FileUtils.test("/home/bren/Downloads/" + name + ".jpg", FileTest.EXISTS) == false) {
                     download_file(thumbnail, name );

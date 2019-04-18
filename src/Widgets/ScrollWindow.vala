@@ -15,7 +15,7 @@ public class ScrollWindow : ScrolledWindow {
            foreach(Models.Post post in post_list) {
                _content_area.pack_start(
                new Post(post.post_title,post.post_author,post.post_link, post.post_name)
-               , false, false, 10);
+               , false, false, 0);
            }
            _content_area.show_all();
     }
