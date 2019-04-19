@@ -7,21 +7,29 @@ public class RedditJsonService : Object {
     private static int count = 0;
 
     public static void download_file(string url, string filename) {
+        string file_extension = "";
         if (".jpg" in url) {
-            string fullpath = "/home/bren/Downloads/" + filename + ".jpg" ;
+            file_extension = ".jpg";
+        } else if (".png" in url) {
+            file_extension = ".png";
+        }
+        stdout.printf("URL: " + url + "\n" + "filename: " + filename + "\n");
+        if(".jpg" in url || ".png" in url) {
+            string fullpath = "/home/bren/Downloads/" + filename + file_extension ;
 
             // Only download file if it does not exist
             if (FileUtils.test(fullpath, FileTest.EXISTS) == false) {
                 var uri = url;
+                stdout.printf("Downloading file: " + uri + "\n");
                 var session = new Soup.Session ();
                 var message = new Soup.Message ("GET", uri);
-                stdout.printf("Downloading file: " + url + "\n");
                 try {
                     count++;
                     session.send_message (message);
                     FileUtils.set_data(fullpath, message.response_body.data);
                 } catch (Error e) { stderr.printf("error happend downloading resource: " + url + "\n");}
             }
+
         }
     }
 
@@ -63,11 +71,8 @@ public class RedditJsonService : Object {
                 }
                 var url = child_data.get_string_member("url");
 
-
-                if (FileUtils.test("/home/bren/Downloads/" + name + ".jpg", FileTest.EXISTS) == false) {
-                    download_file(thumbnail, name );
-                }
-                post_list.add(new Models.Post(title, author, link, name, flair, url, ups, downs));
+                download_file(thumbnail, name);
+                post_list.add(new Models.Post(title, author, link, name, flair, url, thumbnail, ups, downs));
             }
 
             } catch (Error e) {

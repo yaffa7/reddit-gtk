@@ -14,6 +14,7 @@ yaffa_deps = [
   dependency('libsoup-2.4', version: '>=2.4'),
   dependency('json-glib-1.0', version: '>=1.0'),
   dependency('gee-0.8',version: '>0.8'),
+  dependency('glib-2.0'),
 ]
 
 gnome = import('gnome')

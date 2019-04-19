@@ -1,4 +1,5 @@
 using Gtk;
+using GLib;
 
 public class Post : Box {
 
@@ -10,7 +11,7 @@ public class Post : Box {
     EventBox image_container {get;set;}
     Box vote_container {get;set;}
 
-    public Post(string title, string author, string link, string name, string flair, string url, int64 ups, int64 downs) {
+    public Post(string title, string author, string link, string name, string flair, string url,string thumbnail, int64 ups, int64 downs) {
         orientation = Orientation.HORIZONTAL;
         post_title = new Label(title);
         post_author = new Label("Posted by u/" + author);
@@ -25,28 +26,44 @@ public class Post : Box {
         image_container = new EventBox();
         image_container.get_style_context().add_class("image");
         image_container.button_release_event.connect(() => {
-            var preview = new Preview(url, name);
-            preview.show_all();
-            image_container.opacity = 0.5;
+        stdout.printf(url);
+            if(".jpg" in url || ".png" in url) {
+                // Show Image Preview
+                var preview = new Preview(url, name);
+                preview.show_all();
+                image_container.opacity = 0.5;
+            } else if ("youtube" in url) {
+            try {
+                Process.spawn_command_line_async("mpv " + url);
+            } catch(Error e) {}
+
+            }
             return false;
         });
-
         try {
-            var loader = new Gdk.Pixbuf.from_file("/home/bren/Downloads/" + name + ".jpg");
+            string file_extension = "";
+            if (".jpg" in thumbnail) {
+                file_extension = ".jpg";
+            } else if (".png" in thumbnail) {
+                file_extension = ".png";
+            }
+
+            stdout.printf("Opening file from path: /home/bren/Downloads/" + name + file_extension + "\n");
+            var loader = new Gdk.Pixbuf.from_file("/home/bren/Downloads/" + name + file_extension);
             post_image = new Image.from_pixbuf(loader);
             post_image.xalign = 0;
+            post_image.margin_end = 10;
             image_container.add(post_image);
-        } catch (Error e) {stdout.printf("Failed loading image!");}
+        } catch (Error e) {stdout.printf("Failed loading image!: " + title);}
 
 
         post_title.xalign = 0;
-        post_title.margin_start = 10;
+        //post_title.margin_start = 10;
         post_title.get_style_context().add_class("post-title");
         post_title.max_width_chars = 60;
         post_title.wrap = true;
 
         post_author.xalign = 0;
-        post_author.margin_start = 10;
         post_author.get_style_context().add_class("post-author");
 
         post_link.xalign = 0;

@@ -14,8 +14,8 @@ public class ScrollWindow : ScrolledWindow {
          var post_list = _service.get_posts(subreddit);
            foreach(Models.Post post in post_list) {
                _content_area.pack_start(
-               new Post(post.post_title,post.post_author,post.post_link, post.post_name, post.post_flair, post.post_url,
-               post.post_ups, post.post_downs)
+               new Post(post.post_title,post.post_author,post.post_link, post.post_name, post.post_flair,
+               post.post_url, post.post_thumbnail,post.post_ups, post.post_downs)
                , false, false, 0);
            }
            _content_area.show_all();

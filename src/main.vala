@@ -50,6 +50,7 @@ public class Application : Window {
         search_field.placeholder_text = "Search Subreddit";
 
         search_field.activate.connect(() => {
+            scroll_view.clear_content();
             scroll_view.load_content(search_field.get_text());
         });
         var vbox = new Box (Orientation.VERTICAL, 0);

@@ -15,7 +15,15 @@ class Preview : Window {
 
         var hiname = name + "_hi";
         _service.download_file(url, hiname);
-        string filename = "/home/bren/Downloads/" + hiname + ".jpg";
+
+        string file_extension = "";
+        if (".jpg" in url) {
+            file_extension = ".jpg";
+        } else if (".png" in url) {
+            file_extension = ".png";
+        }
+
+        string filename = "/home/bren/Downloads/" + hiname + file_extension;
 
         stdout.printf(filename);
         try {
