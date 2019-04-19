@@ -4,6 +4,7 @@ yaffa_sources = [
   'Widgets/ScrollWindow.vala',
   'Widgets/MainToolbar.vala',
   'Widgets/Post.vala',
+  'Widgets/Preview.vala',
   'Models/Post.vala',
 ]
 

@@ -24,13 +24,20 @@ public class Post : Box {
 
         image_container = new EventBox();
         image_container.get_style_context().add_class("image");
-        image_container.button_press_event.connect(() => {
-            stdout.printf("CLICKED");
+        image_container.button_release_event.connect(() => {
+            var preview = new Preview(url, name);
+            preview.show_all();
+            image_container.opacity = 0.5;
             return false;
         });
 
-        post_image = new Image.from_file("/home/bren/Downloads/" + name + ".jpg");
-        post_image.xalign = 0;
+        try {
+            var loader = new Gdk.Pixbuf.from_file("/home/bren/Downloads/" + name + ".jpg");
+            post_image = new Image.from_pixbuf(loader);
+            post_image.xalign = 0;
+            image_container.add(post_image);
+        } catch (Error e) {stdout.printf("Failed loading image!");}
+
 
         post_title.xalign = 0;
         post_title.margin_start = 10;
@@ -49,7 +56,7 @@ public class Post : Box {
         post_details.pack_start(post_author, true, false, 5);
         //post_details.pack_start(post_link, false, false, 5);
 
-        image_container.add(post_image);
+
 
         vote_container.pack_start(new Label(ups.to_string()));
         vote_container.pack_start(new Label("."));

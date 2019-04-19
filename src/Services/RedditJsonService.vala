@@ -8,15 +8,20 @@ public class RedditJsonService : Object {
 
     public static void download_file(string url, string filename) {
         if (".jpg" in url) {
-            stdout.printf("Downloading file: " + url + "\n");
-            var uri = url;
-            var session = new Soup.Session ();
-            var message = new Soup.Message ("GET", uri);
-            try {
-                count++;
-                session.send_message (message);
-                FileUtils.set_data("/home/bren/Downloads/" + filename + ".jpg" , message.response_body.data);
-            } catch (Error e) { stderr.printf("error happend downloading resource: " + url + "\n");}
+            string fullpath = "/home/bren/Downloads/" + filename + ".jpg" ;
+
+            // Only download file if it does not exist
+            if (FileUtils.test(fullpath, FileTest.EXISTS) == false) {
+                var uri = url;
+                var session = new Soup.Session ();
+                var message = new Soup.Message ("GET", uri);
+                stdout.printf("Downloading file: " + url + "\n");
+                try {
+                    count++;
+                    session.send_message (message);
+                    FileUtils.set_data(fullpath, message.response_body.data);
+                } catch (Error e) { stderr.printf("error happend downloading resource: " + url + "\n");}
+            }
         }
     }
 
