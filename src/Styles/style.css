@@ -3,21 +3,25 @@
   border-radius: 3em;
 }
 
-
-.post-title {
-	font-family: cantarell, Arial;
-	font-weight: 600;
-	font-size: 22px;
-}
-
 .post {
 	padding: 10px;
 	background: rgba(.5,.5,.5,.13);
 	border-bottom: 1px solid rgba(129,131,132,.2);
 }
 
+.post-title {
+	font-family: cantarell, Arial;
+	font-weight: 600;
+	font-size: 22px;
+}
 .post-author {
-	background: rgba(.5,.5,.5,.2);
-	border-radius: 2em;
-	padding: 5px 5px 5px 10px;
+  font-family: cantarell, Arial;
+	font-size: 15px;
+	opacity: .5;
+}
+
+.votes {
+  font-family: cantarell, Arial;
+	font-weight: 600;
+	font-size: 16px;
 }

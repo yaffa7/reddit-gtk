@@ -20,7 +20,7 @@ public class RedditJsonService : Object {
         }
     }
 
-    public static ArrayList<Models.Post> get_response(string subreddit) {
+    public static ArrayList<Models.Post> get_posts(string subreddit) {
         var uri = "https://www.reddit.com/r/" + subreddit + ".json";
         var post_list = new ArrayList<Models.Post>();
         var session = new Soup.Session ();
@@ -46,14 +46,23 @@ public class RedditJsonService : Object {
                 var title = child_data.get_string_member("title");
                 var author = child_data.get_string_member("author");
                 var link = child_data.get_string_member("url");
+                var ups = child_data.get_int_member("ups");
+                var downs = child_data.get_int_member("downs");
                 var thumbnail = child_data.get_string_member("thumbnail");
                 var name = child_data.get_string_member("name");
-                var flair = child_data.get_string_member("link_flair_css_class");
+                var raw_flair = child_data.get_object_member("link_flair_css_class");
+                var flair = "";
+                if (raw_flair != null) {
+                    flair = child_data.get_string_member("link_flair_css_class");
+
+                }
+                var url = child_data.get_string_member("url");
+
 
                 if (FileUtils.test("/home/bren/Downloads/" + name + ".jpg", FileTest.EXISTS) == false) {
                     download_file(thumbnail, name );
                 }
-                post_list.add(new Models.Post(title, author, link, name));
+                post_list.add(new Models.Post(title, author, link, name, flair, url, ups, downs));
             }
 
             } catch (Error e) {
@@ -63,3 +72,4 @@ public class RedditJsonService : Object {
     }
 }
 }
+

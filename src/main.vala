@@ -35,7 +35,7 @@ public class Application : Window {
 		this.title = "Vala Reddit";
 		this.window_position = Gtk.WindowPosition.CENTER;
 		this.destroy.connect (Gtk.main_quit);
-		this.set_default_size (600, 900);
+		this.set_default_size (700, 900);
 
 
         var scroll_view = new ScrollWindow();
@@ -68,6 +68,8 @@ public class Application : Window {
             Gdk.Screen.get_default(),
             css_provider,
             STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            scroll_view.load_content("wallpapers");
 
 	}
 

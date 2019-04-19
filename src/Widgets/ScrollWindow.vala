@@ -11,10 +11,11 @@ public class ScrollWindow : ScrolledWindow {
     }
 
     public void load_content(string subreddit) {
-         var post_list = _service.get_response(subreddit);
+         var post_list = _service.get_posts(subreddit);
            foreach(Models.Post post in post_list) {
                _content_area.pack_start(
-               new Post(post.post_title,post.post_author,post.post_link, post.post_name)
+               new Post(post.post_title,post.post_author,post.post_link, post.post_name, post.post_flair, post.post_url,
+               post.post_ups, post.post_downs)
                , false, false, 0);
            }
            _content_area.show_all();
