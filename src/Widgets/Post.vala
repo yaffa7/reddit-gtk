@@ -15,28 +15,35 @@ public class Post : Box {
         post_title = new Label(title);
         post_author = new Label("Posted by u/" + author);
         post_link = new Label(link);
+
         post_details = new Box(Orientation.VERTICAL, 0);
         post_details.get_style_context().add_class("details");
-        image_container = new EventBox();
+
         vote_container = new Box(Orientation.VERTICAL, 0);
         vote_container.get_style_context().add_class("votes");
+
+        image_container = new EventBox();
         image_container.get_style_context().add_class("image");
         image_container.button_press_event.connect(() => {
             stdout.printf("CLICKED");
             return false;
         });
+
         post_image = new Image.from_file("/home/bren/Downloads/" + name + ".jpg");
+        post_image.xalign = 0;
+
         post_title.xalign = 0;
         post_title.margin_start = 10;
         post_title.get_style_context().add_class("post-title");
         post_title.max_width_chars = 60;
         post_title.wrap = true;
+
         post_author.xalign = 0;
         post_author.margin_start = 10;
         post_author.get_style_context().add_class("post-author");
+
         post_link.xalign = 0;
         post_link.margin_start = 10;
-        post_image.xalign = 0;
 
         post_details.pack_start(post_title, false, false ,5);
         post_details.pack_start(post_author, true, false, 5);
