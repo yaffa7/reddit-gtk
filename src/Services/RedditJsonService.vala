@@ -69,6 +69,7 @@ public class RedditJsonService : Object {
                     flair = child_data.get_string_member("link_flair_css_class");
 
                 }
+
                 var url = child_data.get_string_member("url");
 
                 download_file(thumbnail, name);

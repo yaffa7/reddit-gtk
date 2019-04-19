@@ -5,7 +5,7 @@ public class Post : Box {
 
     Label post_title {get;set;}
     Label post_author {get;set;}
-    Label post_link {get;set;}
+    Label post_flair {get;set;}
     Image post_image {get;set;}
     Box post_details {get;set;}
     EventBox image_container {get;set;}
@@ -15,7 +15,7 @@ public class Post : Box {
         orientation = Orientation.HORIZONTAL;
         post_title = new Label(title);
         post_author = new Label("Posted by u/" + author);
-        post_link = new Label(link);
+        post_flair = new Label(flair);
 
         post_details = new Box(Orientation.VERTICAL, 0);
         post_details.get_style_context().add_class("details");
@@ -35,6 +35,7 @@ public class Post : Box {
             } else if ("youtube" in url) {
             try {
                 Process.spawn_command_line_async("mpv " + url);
+                image_container.opacity = 0.5;
             } catch(Error e) {}
 
             }
@@ -66,18 +67,26 @@ public class Post : Box {
         post_author.xalign = 0;
         post_author.get_style_context().add_class("post-author");
 
-        post_link.xalign = 0;
-        post_link.margin_start = 10;
+        post_flair.xalign = 0;
+        post_flair.margin_start = 10;
 
         post_details.pack_start(post_title, false, false ,5);
         post_details.pack_start(post_author, true, false, 5);
-        //post_details.pack_start(post_link, false, false, 5);
+        if (flair != "") {
+            post_details.pack_start(post_flair, false, false, 5);
+        }
 
 
-
-        vote_container.pack_start(new Label(ups.to_string()));
-        vote_container.pack_start(new Label("."));
-        vote_container.pack_start(new Label(downs.to_string()));
+        int votes_max_width = 5;
+        var ups_label = new Label(ups.to_string());
+        ups_label.width_chars = votes_max_width;
+        var period_label = new Label(".");
+        period_label.width_chars = votes_max_width;
+        var downs_label = new Label(downs.to_string());
+        downs_label.width_chars = votes_max_width;
+        vote_container.pack_start(ups_label);
+        vote_container.pack_start(period_label);
+        vote_container.pack_start(downs_label);
 
         pack_start(image_container, false, false ,0);
         pack_start(post_details, false , false, 0);
