@@ -35,15 +35,12 @@ public class Application : Window {
 		this.title = "Vala Reddit";
 		this.window_position = Gtk.WindowPosition.CENTER;
 		this.destroy.connect (Gtk.main_quit);
-		this.set_default_size (700, 900);
+		this.set_default_size (700, 1000);
 
 
         var scroll_view = new ScrollWindow();
         var main_toolbar = new MainToolbar();
 
-        main_toolbar.clear_button.clicked.connect(() => {
-            scroll_view.clear_content();
-        });
 
         var search_field = new Gtk.SearchEntry();
         search_field.get_style_context().add_class("scroll");
@@ -51,8 +48,14 @@ public class Application : Window {
 
         search_field.activate.connect(() => {
             scroll_view.clear_content();
-            scroll_view.load_content(search_field.get_text());
+            scroll_view.load_content(search_field.get_text(), "");
         });
+
+        main_toolbar.clear_button.clicked.connect(() => {
+            scroll_view.clear_content();
+            scroll_view.load_content(search_field.get_text(), "");
+        });
+
         var vbox = new Box (Orientation.VERTICAL, 0);
         vbox.pack_start (main_toolbar, false, true, 2);
         vbox.pack_start(search_field, false, true, 5);
@@ -70,7 +73,7 @@ public class Application : Window {
             css_provider,
             STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-            scroll_view.load_content("wallpapers");
+            scroll_view.load_content("wallpapers","");
 
 	}
 

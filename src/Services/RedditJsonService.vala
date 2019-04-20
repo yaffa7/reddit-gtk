@@ -33,8 +33,9 @@ public class RedditJsonService : Object {
         }
     }
 
-    public static ArrayList<Models.Post> get_posts(string subreddit) {
-        var uri = "https://www.reddit.com/r/" + subreddit + ".json";
+    public static ArrayList<Models.Post> get_posts(string subreddit, string after) {
+        var uri = "https://www.reddit.com/r/" + subreddit + ".json?after=" + after;
+        stdout.printf("Request URI: " + uri + "\n");
         var post_list = new ArrayList<Models.Post>();
         var session = new Soup.Session ();
         var message = new Soup.Message ("GET", uri);
