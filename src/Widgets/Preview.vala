@@ -10,7 +10,6 @@ class Preview : Window {
         this.title = url;
         this.border_width = 0;
         this.window_position = Gtk.WindowPosition.NONE;
-        this.set_default_size(1920,1080);
         this.destroy.connect(() => { this.destroy; });
 
         var hiname = name + "_hi";
