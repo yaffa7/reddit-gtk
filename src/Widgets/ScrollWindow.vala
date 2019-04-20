@@ -31,13 +31,10 @@ public class ScrollWindow : ScrolledWindow {
         _saved_reddit = subreddit;
         _post_list = _service.get_posts(subreddit, after);
 
-           foreach(Models.Post post in _post_list) {
-               _content_area.pack_start(
-               new Post(post.post_title,post.post_author,post.post_link, post.post_name, post.post_flair,
-               post.post_url, post.post_thumbnail,post.post_ups, post.post_downs)
-               , false, false, 0);
-           }
-           _content_area.show_all();
+        foreach(Models.Post post_model in _post_list) {
+            _content_area.pack_start(new Post(post_model), false, false, 0);
+        }
+        _content_area.show_all();
     }
 
     public void clear_content() {
