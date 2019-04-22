@@ -4,7 +4,13 @@ namespace Services {
 
 public class RedditJsonService : Object {
 
+    public static string _subreddit_display_name = "";
+    public static string _header_img_url = "";
+    public static string _subreddit_title = "";
+    public static int64 _subscribers;
+
     private static int count = 0;
+    private static string _subreddit = "";
 
     public static void download_file(string url, string filename) {
         string file_extension = "";
@@ -34,7 +40,11 @@ public class RedditJsonService : Object {
     }
 
     public static ArrayList<Models.Post> get_posts(string subreddit, string after) {
-        var uri = "https://www.reddit.com/r/" + subreddit + ".json?after=" + after;
+
+        if (subreddit != "")
+            _subreddit = subreddit;
+
+        var uri = "https://www.reddit.com/r/" + _subreddit + ".json?after=" + after;
         stdout.printf("Request URI: " + uri + "\n");
         var post_list = new ArrayList<Models.Post>();
         var session = new Soup.Session ();
@@ -81,6 +91,27 @@ public class RedditJsonService : Object {
                 stderr.printf ("I guess something is not working...\n");
         }
         return post_list;
+    }
+
+    public static void get_subreddit_details(string subreddit) {
+        var uri = "https://www.reddit.com/r/" + subreddit + "/about.json";
+        stdout.printf("Request URI: " + uri + "\n");
+        var post_list = new ArrayList<Models.Post>();
+        var session = new Soup.Session ();
+        var message = new Soup.Message ("GET", uri);
+        session.send_message (message);
+
+        try {
+            var parser = new Json.Parser ();
+            parser.load_from_data ((string) message.response_body.flatten ().data, -1);
+            var root_object = parser.get_root ().get_object ();
+            var data = root_object.get_object_member ("data");
+
+            _subreddit_display_name = data.get_string_member ("display_name_prefixed");
+            _header_img_url = data.get_string_member ("header_img");
+            _subreddit_title = data.get_string_member("title");
+            _subscribers = data.get_int_member("subscribers");
+        } catch (Error e) {}
     }
 }
 }

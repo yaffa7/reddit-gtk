@@ -49,12 +49,14 @@ public class Application : Window {
         search_field.activate.connect(() => {
             scroll_view.clear_content();
             scroll_view.load_content(search_field.get_text(), "");
+            main_toolbar.get_details(search_field.get_text());
         });
 
         main_toolbar.clear_button.clicked.connect(() => {
             scroll_view.clear_content();
             scroll_view.load_content(search_field.get_text(), "");
         });
+
 
         var vbox = new Box (Orientation.VERTICAL, 0);
         vbox.pack_start (main_toolbar, false, true, 2);
@@ -74,6 +76,7 @@ public class Application : Window {
             STYLE_PROVIDER_PRIORITY_APPLICATION);
 
             scroll_view.load_content("wallpapers","");
+
 
 	}
 

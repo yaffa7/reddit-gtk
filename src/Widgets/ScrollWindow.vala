@@ -6,7 +6,6 @@ public class ScrollWindow : ScrolledWindow {
     private Box _content_area {get;set;}
     private Services.RedditJsonService _service = new  Services.RedditJsonService();
 
-    private string _saved_reddit = "wallpapers";
     private ArrayList<Models.Post> _post_list;
 
     public ScrollWindow() {
@@ -18,7 +17,7 @@ public class ScrollWindow : ScrolledWindow {
                 case PositionType.BOTTOM:
                 {
                     stdout.printf("Hit bottom!");
-                    load_content("wallpapers", _post_list.last().post_name);
+                    load_content("", _post_list.last().post_name);
                     break;
                 }
                 default:
@@ -28,7 +27,6 @@ public class ScrollWindow : ScrolledWindow {
     }
 
     public void load_content(string subreddit, string after) {
-        _saved_reddit = subreddit;
         _post_list = _service.get_posts(subreddit, after);
 
         foreach(Models.Post post_model in _post_list) {
