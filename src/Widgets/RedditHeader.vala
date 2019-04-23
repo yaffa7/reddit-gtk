@@ -1,4 +1,5 @@
 using Gtk;
+using Services;
 
 public class RedditHeader : HeaderBar {
 
@@ -25,7 +26,7 @@ public class RedditHeader : HeaderBar {
 
 
         public void update_header(string subreddit) {
-            Services.RedditJsonService.get_subreddit_details(subreddit);
+            RedditJsonService.get_subreddit_details(subreddit);
 
 
         }

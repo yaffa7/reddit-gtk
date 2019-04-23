@@ -1,4 +1,5 @@
 using Gtk;
+using Services;
 
 class Preview : Window {
 
@@ -12,7 +13,7 @@ class Preview : Window {
         this.destroy.connect(() => { this.destroy; });
 
         var hiname = name + "_hi";
-        Services.RedditJsonService.download_file(url, hiname);
+        RedditJsonService.download_file(url, hiname);
 
         string file_extension = "";
         if (".jpg" in url) {
