@@ -4,7 +4,6 @@ using Gee;
 public class ScrollWindow : ScrolledWindow {
 
     private Box _content_area {get;set;}
-    private Services.RedditJsonService _service = new  Services.RedditJsonService();
 
     private ArrayList<Models.Post> _post_list;
 
@@ -27,7 +26,7 @@ public class ScrollWindow : ScrolledWindow {
     }
 
     public void load_content(string subreddit, string after) {
-        _post_list = _service.get_posts(subreddit, after);
+        _post_list = Services.RedditJsonService.get_posts(subreddit, after);
 
         foreach(Models.Post post_model in _post_list) {
             _content_area.pack_start(new Post(post_model), false, false, 0);

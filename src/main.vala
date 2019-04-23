@@ -39,7 +39,6 @@ public class Application : Window {
 
 
         var scroll_view = new ScrollWindow();
-        var main_toolbar = new MainToolbar();
 
 
         var search_field = new Gtk.SearchEntry();
@@ -49,17 +48,11 @@ public class Application : Window {
         search_field.activate.connect(() => {
             scroll_view.clear_content();
             scroll_view.load_content(search_field.get_text(), "");
-            main_toolbar.get_details(search_field.get_text());
         });
-
-        main_toolbar.clear_button.clicked.connect(() => {
-            scroll_view.clear_content();
-            scroll_view.load_content(search_field.get_text(), "");
-        });
-
 
         var vbox = new Box (Orientation.VERTICAL, 0);
-        vbox.pack_start (main_toolbar, false, true, 2);
+        //vbox.pack_start (main_toolbar, false, true, 2);
+        vbox.pack_start(new RedditHeader(), false, true, 0);
         vbox.pack_start(search_field, false, true, 5);
         vbox.pack_start (scroll_view , true, true, 0);
         this.add(vbox);

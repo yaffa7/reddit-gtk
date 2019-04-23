@@ -10,6 +10,8 @@ public class Post : Box {
     Box post_details {get;set;}
     EventBox image_container {get;set;}
     Box vote_container {get;set;}
+    Box comment_container {get;set;}
+    Box side_container {get;set;}
 
     public Post(Models.Post post) {
         orientation = Orientation.HORIZONTAL;
@@ -20,8 +22,11 @@ public class Post : Box {
         post_details = new Box(Orientation.VERTICAL, 0);
         post_details.get_style_context().add_class("details");
 
-        vote_container = new Box(Orientation.VERTICAL, 0);
-        vote_container.get_style_context().add_class("votes");
+        vote_container = new Box(Orientation.HORIZONTAL, 0);
+
+        comment_container = new Box(Orientation.HORIZONTAL, 0);
+        side_container = new Box(Orientation.VERTICAL, 0);
+        side_container.get_style_context().add_class("votes");
 
         image_container = new EventBox();
         image_container.get_style_context().add_class("image");
@@ -77,20 +82,19 @@ public class Post : Box {
         }
 
 
-        int votes_max_width = 5;
         var ups_label = new Label(post.post_ups.to_string());
-        ups_label.width_chars = votes_max_width;
-        var period_label = new Label(".");
-        period_label.width_chars = votes_max_width;
-        var downs_label = new Label(post.post_downs.to_string());
-        downs_label.width_chars = votes_max_width;
-        vote_container.pack_start(ups_label);
-        vote_container.pack_start(period_label);
-        vote_container.pack_start(downs_label);
+        vote_container.pack_start(new Gtk.Image.from_icon_name ("arrow-up", Gtk.IconSize.MENU), false, false , 0);
+        vote_container.pack_start(ups_label, false, false, 0);
+
+        comment_container.pack_start(new Gtk.Image.from_icon_name ("dialog-messages", Gtk.IconSize.MENU));
+        comment_container.pack_start(new Label(post.post_comments.to_string()));
+
+        side_container.pack_start(vote_container);
+        side_container.pack_start(comment_container);
 
         pack_start(image_container, false, false ,0);
         pack_start(post_details, false , false, 0);
-        pack_end(vote_container, false, false, 0);
+        pack_end(side_container, false, false, 0);
 
         get_style_context().add_class("post");
     }

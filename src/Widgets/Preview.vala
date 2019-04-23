@@ -3,7 +3,6 @@ using Gtk;
 class Preview : Window {
 
     Image post_image {get;set;}
-    private Services.RedditJsonService _service = new  Services.RedditJsonService();
 
     public Preview(string url, string name) {
 
@@ -13,7 +12,7 @@ class Preview : Window {
         this.destroy.connect(() => { this.destroy; });
 
         var hiname = name + "_hi";
-        _service.download_file(url, hiname);
+        Services.RedditJsonService.download_file(url, hiname);
 
         string file_extension = "";
         if (".jpg" in url) {

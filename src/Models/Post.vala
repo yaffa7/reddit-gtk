@@ -9,9 +9,10 @@ namespace Models {
         public string post_thumbnail {get;set;}
         public int64 post_ups {get;set;}
         public int64 post_downs {get;set;}
+        public int64 post_comments {get;set;}
 
         public Post(string title, string author, string link, string name,string flair, string url,
-        string thumbnail, int64 ups, int64 downs) {
+        string thumbnail, int64 ups, int64 downs,int64 comments) {
             post_title = title;
             post_author = author;
             post_link = link;
@@ -21,6 +22,7 @@ namespace Models {
             post_thumbnail = thumbnail;
             post_ups = ups;
             post_downs = downs;
+            post_comments = comments;
         }
     }
 }

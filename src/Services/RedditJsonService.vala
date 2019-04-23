@@ -75,6 +75,7 @@ public class RedditJsonService : Object {
                 var thumbnail = child_data.get_string_member("thumbnail");
                 var name = child_data.get_string_member("name");
                 var raw_flair = child_data.get_object_member("link_flair_css_class");
+                var num_comments = child_data.get_int_member("num_comments");
                 var flair = "";
                 if (raw_flair != null) {
                     flair = child_data.get_string_member("link_flair_css_class");
@@ -84,7 +85,7 @@ public class RedditJsonService : Object {
                 var url = child_data.get_string_member("url");
 
                 download_file(thumbnail, name);
-                post_list.add(new Models.Post(title, author, link, name, flair, url, thumbnail, ups, downs));
+                post_list.add(new Models.Post(title, author, link, name, flair, url, thumbnail, ups, downs, num_comments));
             }
 
             } catch (Error e) {
