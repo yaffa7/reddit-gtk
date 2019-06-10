@@ -5,9 +5,9 @@ class Preview : Window {
 
     Image post_image {get;set;}
 
-    public Preview(string url, string name) {
+    public Preview(string url, string name, string title) {
 
-        this.title = url;
+        this.title = title;
         this.border_width = 0;
         this.window_position = Gtk.WindowPosition.NONE;
         this.destroy.connect(() => { this.destroy; });

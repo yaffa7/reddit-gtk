@@ -1,11 +1,13 @@
 yaffa_sources = [
   'main.vala',
   'Services/RedditJsonService.vala',
+  'Services/SettingsManager.vala',
   'Widgets/ScrollWindow.vala',
   'Widgets/Post.vala',
   'Widgets/Preview.vala',
   'Widgets/RedditHeader.vala',
   'Models/Post.vala',
+  'Models/Settings.vala',
 ]
 
 yaffa_deps = [

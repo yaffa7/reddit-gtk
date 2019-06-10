@@ -34,7 +34,7 @@ public class Post : Box {
         stdout.printf(post.post_url);
             if(".jpg" in post.post_url || ".png" in post.post_url) {
                 // Show Image Preview
-                var preview = new Preview(post.post_url, post.post_name);
+                var preview = new Preview(post.post_url, post.post_name, post.post_title);
                 preview.show_all();
                 image_container.opacity = 0.5;
             } else if ("youtube" in post.post_url) {
@@ -83,10 +83,15 @@ public class Post : Box {
 
 
         var ups_label = new Label(post.post_ups.to_string());
-        vote_container.pack_start(new Gtk.Image.from_icon_name ("arrow-up", Gtk.IconSize.MENU), false, false , 0);
+        var arrow_up_image = new Gtk.Image.from_icon_name ("arrow-up", Gtk.IconSize.MENU);
+        arrow_up_image.get_style_context().add_class("arrow-up");
+        vote_container.pack_start(arrow_up_image, false, false , 0);
         vote_container.pack_start(ups_label, false, false, 0);
 
-        comment_container.pack_start(new Gtk.Image.from_icon_name ("dialog-messages", Gtk.IconSize.MENU));
+
+        var message_image = new Gtk.Image.from_icon_name ("dialog-messages", Gtk.IconSize.MENU);
+        message_image.get_style_context().add_class("message");
+        comment_container.pack_start(message_image);
         comment_container.pack_start(new Label(post.post_comments.to_string()));
 
         side_container.pack_start(vote_container);

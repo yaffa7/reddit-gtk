@@ -27,3 +27,18 @@
 	font-size: 16px;
 	border-left: 1px solid rgba(129,131,132,.2);
 }
+
+.subreddit-title {
+  margin-left: 5px;
+  font-family: cantarell, Arial;
+	font-weight: 600;
+	font-size: 15px;
+}
+
+.arrow-up {
+  margin-right: 4px;
+}
+
+.message {
+  margin-right: 4px;
+}
