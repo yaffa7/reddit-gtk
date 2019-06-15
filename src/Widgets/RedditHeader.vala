@@ -5,15 +5,17 @@ public class RedditHeader : HeaderBar {
 
         private Label _subreddit_name {get;set;}
         private Image _subreddit_image {get;set;}
+        public ToolButton button2 {get;set;}
 
         construct {
         	set_title("Header");
         	set_show_close_button(true);
         	set_subtitle("Subtitle here");
+        	get_style_context().add_class("subreddit-header");
         	spacing = 0;
         	//Get image from icon theme
         	Image img = new Image.from_icon_name ("gtk-refresh", IconSize.MENU);
-        	ToolButton button2 = new ToolButton (img, null);
+        	button2 = new ToolButton (img, null);
             pack_end(button2);
 
 
@@ -28,12 +30,12 @@ public class RedditHeader : HeaderBar {
 
         public void update_header(string subreddit) {
             this.remove(_subreddit_image);
-            this.remove(__subreddit_name);
+            this.remove(_subreddit_name);
             RedditJsonService.get_subreddit_details(subreddit);
             RedditJsonService.download_file(RedditJsonService.header_img_url, subreddit );
             stdout.printf("header image!!!!! " + RedditJsonService.header_img_url);
             try {
-                _subreddit_image = new Image.from_pixbuf(new Gdk.Pixbuf.from_file_at_size("/home/bren/Downloads/" + subreddit + ".png", 50, 50));
+                _subreddit_image = new Image.from_pixbuf(new Gdk.Pixbuf.from_file_at_size(Services.SettingsManager.get_data_dir() + subreddit + ".png", 50, 50));
                 pack_start(_subreddit_image);
             } catch (Error e) {}
             _subreddit_name = new Label(RedditJsonService.subreddit_title);

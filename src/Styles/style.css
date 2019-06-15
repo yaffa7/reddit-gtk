@@ -35,6 +35,10 @@
 	font-size: 15px;
 }
 
+.subreddit-header {
+  padding: 5px;
+}
+
 .arrow-up {
   margin-right: 4px;
 }

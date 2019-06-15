@@ -41,18 +41,25 @@ public class Application : Window {
         var scroll_view = new ScrollWindow();
         var header = new RedditHeader();
 
+        // Search Field
         var search_field = new Gtk.SearchEntry();
         search_field.get_style_context().add_class("scroll");
         search_field.placeholder_text = "Search Subreddit";
 
+        // Search Field events
         search_field.activate.connect(() => {
+            scroll_view.clear_content();
+            scroll_view.load_content(search_field.get_text(), "");
+            header.update_header(search_field.get_text());
+        });
+        // Refresh button event
+        header.button2.clicked.connect(() => {
             scroll_view.clear_content();
             scroll_view.load_content(search_field.get_text(), "");
             header.update_header(search_field.get_text());
         });
 
         var vbox = new Box (Orientation.VERTICAL, 0);
-        //vbox.pack_start (main_toolbar, false, true, 2);
         vbox.pack_start(header, false, true, 0);
         vbox.pack_start(search_field, false, true, 5);
         vbox.pack_start (scroll_view , true, true, 0);
@@ -69,8 +76,9 @@ public class Application : Window {
             css_provider,
             STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-            scroll_view.load_content("wallpapers","");
-
+            var default_subreddit = "linux_gaming";
+            scroll_view.load_content(default_subreddit,"");
+            header.update_header(default_subreddit);
 
 	}
 

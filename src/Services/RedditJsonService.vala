@@ -8,9 +8,9 @@ public class RedditJsonService : Object {
     public static string header_img_url = "";
     public static string subreddit_title = "";
     public static int64 subscribers;
+    public static string subreddit = "";
 
     private static int count = 0;
-    private static string subreddit = "";
 
     public static void download_file(string url, string filename) {
         string file_extension = "";
