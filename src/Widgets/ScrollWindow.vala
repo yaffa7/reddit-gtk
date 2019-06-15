@@ -40,6 +40,12 @@ public class ScrollWindow : ScrolledWindow {
         foreach(var child in children) {
             _content_area.remove(child);
         }
+        scroll_to_top();
+    }
+
+    private void scroll_to_top() {
+        var adj = get_vadjustment();
+        adj.set_value(0);
     }
 
 }

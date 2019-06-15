@@ -42,7 +42,6 @@ public class Post : Box {
             } else if (".png" in post.post_thumbnail) {
                 file_extension = ".png";
             }
-            print("Data dir: " + Services.SettingsManager.get_data_dir() + "\n");
             var file_path = Services.SettingsManager.get_data_dir() + post.post_name + file_extension;
             stdout.printf("Opening file from path: " + file_path + "\n");
             var loader = new Gdk.Pixbuf.from_file(file_path);
