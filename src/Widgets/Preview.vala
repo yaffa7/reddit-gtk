@@ -22,7 +22,7 @@ class Preview : Window {
             file_extension = ".png";
         }
 
-        string filename = "/home/bren/Downloads/" + hiname + file_extension;
+        string filename = Services.SettingsManager.get_data_dir() + hiname + file_extension;
 
         stdout.printf(filename);
         try {

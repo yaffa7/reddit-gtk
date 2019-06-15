@@ -21,7 +21,7 @@ public class RedditJsonService : Object {
         }
         stdout.printf("URL: " + url + "\n" + "filename: " + filename + "\n");
         if(".jpg" in url || ".png" in url) {
-            string fullpath = "/home/bren/Downloads/" + filename + file_extension ;
+            string fullpath = SettingsManager.get_data_dir() + filename + file_extension ;
 
             // Only download file if it does not exist
             if (FileUtils.test(fullpath, FileTest.EXISTS) == false) {
