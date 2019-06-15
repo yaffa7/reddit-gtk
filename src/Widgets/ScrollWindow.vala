@@ -5,7 +5,7 @@ using Services;
 public class ScrollWindow : ScrolledWindow {
 
     private Box _content_area {get;set;}
-
+    private bool fetching = false;
     private ArrayList<Models.Post> _post_list;
 
     public ScrollWindow() {
@@ -17,7 +17,12 @@ public class ScrollWindow : ScrolledWindow {
                 case PositionType.BOTTOM:
                 {
                     stdout.printf("Hit bottom!");
-                    load_content("", _post_list.last().post_name);
+                    GLib.MainLoop mainloop = new GLib.MainLoop();
+                    load_content.begin("", _post_list.last().post_name,
+                        (obj,res) => {
+                            mainloop.quit();
+                    });
+                    mainloop.run();
                     break;
                 }
                 default:
@@ -26,13 +31,20 @@ public class ScrollWindow : ScrolledWindow {
         });
     }
 
-    public void load_content(string subreddit, string after) {
-        _post_list = RedditJsonService.get_posts(subreddit, after);
+    public async bool load_content(string subreddit, string after) {
+        GLib.Idle.add(this.load_content.callback);
+        yield;
+        if(!fetching) {
+            fetching = true;
+            _post_list = RedditJsonService.get_posts(subreddit, after);
+            fetching = false;
 
-        foreach(Models.Post post_model in _post_list) {
-            _content_area.pack_start(new Post(post_model), false, false, 0);
+            foreach(Models.Post post_model in _post_list) {
+                _content_area.pack_start(new Post(post_model), false, false, 0);
+            }
+            _content_area.show_all();
         }
-        _content_area.show_all();
+        return true;
     }
 
     public void clear_content() {

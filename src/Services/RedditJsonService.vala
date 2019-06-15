@@ -83,8 +83,6 @@ public class RedditJsonService : Object {
                 }
 
                 var url = child_data.get_string_member("url");
-
-                //download_file(thumbnail, name);
                 post_list.add(new Models.Post(title, author, link, name, flair, url, thumbnail, ups, downs, num_comments));
             }
 

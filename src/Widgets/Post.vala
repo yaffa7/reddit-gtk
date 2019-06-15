@@ -114,13 +114,13 @@ public class Post : Box {
         stdout.printf(_post.post_url);
             if(".jpg" in _post.post_url || ".png" in _post.post_url) {
                 // Show Image Preview
+                image_container.opacity = 0.5;
                 var preview = new Preview(_post.post_url, _post.post_name, _post.post_title);
                 preview.show_all();
-                image_container.opacity = 0.5;
             } else if ("youtube" in _post.post_url) {
             try {
-                Process.spawn_command_line_async("mpv " + _post.post_url);
                 image_container.opacity = 0.5;
+                Process.spawn_command_line_async("mpv " + _post.post_url);
             } catch(Error e) {}
 
             }

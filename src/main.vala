@@ -49,13 +49,23 @@ public class Application : Window {
         // Search Field events
         search_field.activate.connect(() => {
             scroll_view.clear_content();
-            scroll_view.load_content(search_field.get_text(), "");
+            GLib.MainLoop mainloop = new GLib.MainLoop();
+            scroll_view.load_content.begin(search_field.get_text(), "",
+                (obj,res) => {
+                    mainloop.quit();
+                });
+            mainloop.run();
             //header.update_header(search_field.get_text());
         });
         // Refresh button event
         header.button2.clicked.connect(() => {
             scroll_view.clear_content();
-            scroll_view.load_content(search_field.get_text(), "");
+            GLib.MainLoop mainloop = new GLib.MainLoop();
+            scroll_view.load_content.begin(search_field.get_text(), "",
+                (obj,res) => {
+                    mainloop.quit();
+                });
+            mainloop.run();
             //header.update_header(search_field.get_text());
         });
 
@@ -77,8 +87,13 @@ public class Application : Window {
             STYLE_PROVIDER_PRIORITY_APPLICATION);
 
             var default_subreddit = "linux_gaming";
-            scroll_view.load_content(default_subreddit,"");
-            header.update_header(default_subreddit);
+            GLib.MainLoop mainloop = new GLib.MainLoop();
+            scroll_view.load_content.begin(default_subreddit, "",
+                (obj,res) => {
+                    mainloop.quit();
+                });
+            mainloop.run();
+            //header.update_header(default_subreddit);
 
 	}
 
