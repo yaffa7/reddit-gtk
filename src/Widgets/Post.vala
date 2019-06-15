@@ -35,22 +35,16 @@ public class Post : Box {
 
         setup_post_events();
 
-        try {
-            string file_extension = "";
-            if (".jpg" in post.post_thumbnail) {
-                file_extension = ".jpg";
-            } else if (".png" in post.post_thumbnail) {
-                file_extension = ".png";
-            }
-            var file_path = Services.SettingsManager.get_data_dir() + post.post_name + file_extension;
-            stdout.printf("Opening file from path: " + file_path + "\n");
-            var loader = new Gdk.Pixbuf.from_file(file_path);
-            post_image = new Image.from_pixbuf(loader);
-            post_image.xalign = 0;
-            post_image.margin_end = 10;
-            image_container.add(post_image);
-        } catch (Error e) {stdout.printf("Failed loading image!: " + post.post_title);}
-
+        // Download and get image async
+        GLib.MainLoop mainloop = new GLib.MainLoop();
+        get_image.begin((obj, res) => {
+                              post_image = get_image.end(res);
+                              post_image.xalign = 0;
+                              post_image.margin_end = 10;
+                              image_container.add(post_image);
+                              mainloop.quit();
+                          });
+        mainloop.run();
 
         post_author.xalign = 0;
         post_author.get_style_context().add_class("post-author");
@@ -85,6 +79,31 @@ public class Post : Box {
         pack_end(side_container, false, false, 0);
 
         get_style_context().add_class("post");
+        show_all();
+    }
+
+    //
+    // Async Image Getter
+    //
+    private async Image get_image() {
+        GLib.Idle.add(this.get_image.callback);
+        yield;
+        Services.RedditJsonService.download_file(_post.post_thumbnail, _post.post_name);
+        var image = new Image();
+        try {
+            string file_extension = "";
+            if (".jpg" in _post.post_thumbnail) {
+                file_extension = ".jpg";
+            } else if (".png" in _post.post_thumbnail) {
+                file_extension = ".png";
+            }
+            var file_path = Services.SettingsManager.get_data_dir() + _post.post_name + file_extension;
+            stdout.printf("Opening file from path: " + file_path + "\n");
+            var loader = new Gdk.Pixbuf.from_file(file_path);
+            image = new Image.from_pixbuf(loader);
+
+        } catch (Error e) {stdout.printf("Failed loading image!: " + _post.post_title);}
+        return image;
     }
 
     //
